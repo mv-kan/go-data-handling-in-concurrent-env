@@ -41,9 +41,9 @@ And in this example we need to
 In `./pkg/example/car_example.go` we have
 ```
 fireupCarCommunication() - goroutine that communicates with car API library  
-fireupIncreaseSpeed() - goroutine that consumes DataStore and send SetRequest (see type SetRequest struct in ./pkg/store/types.go) to fireupCarCommunication goroutine 
-fireupPrintOutData() - goroutine that just prints out everything that it gets from carDataUpdateChan channel (see func RunCarExample in ./pkg/example/car_example.go)
-fireupWriteDataIntoFile() - goroutine that creates file and writes to it all that it gets from carDataUpdateChan2 channel (see func RunCarExample in ./pkg/example/car_example.go) 
+fireupIncreaseSpeed() - (task 3.) goroutine that consumes DataStore and send SetRequest (see type SetRequest struct in ./pkg/store/types.go) to fireupCarCommunication goroutine 
+fireupPrintOutData() - (task 1.) goroutine that just prints out everything that it gets from carDataUpdateChan channel (see func RunCarExample in ./pkg/example/car_example.go)
+fireupWriteDataIntoFile() - (task 2.) goroutine that creates file and writes to it all that it gets from carDataUpdateChan2 channel (see func RunCarExample in ./pkg/example/car_example.go) 
 ```
 
 So here carCommunication is cleary owner of all DataStore object in this example. If we were to count all goroutines we get
@@ -54,3 +54,5 @@ fireupPrintOutData() +1 goroutine
 fireupWriteDataIntoFile() +1 goroutine
 RunCarExample() +2 goroutines (WHY? because we create 2 goroutines inside this fn, these fn are Fanout) (see func RunCarExample in ./pkg/example/car_example.go)
 ```
+
+And about task 4. ability to kill goroutines at any point of time. We have `var done chan struct{}` that I pass to every goroutine I create.   
